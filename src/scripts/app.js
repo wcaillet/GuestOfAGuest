@@ -1,15 +1,22 @@
-const React = require('react'),
-	ReactDOM = require('react-dom')
+import ReactDOM from 'react-dom'
+import React from 'react'
+import GuestsView from './Components'
+import Backbone from 'backbone'
+
 
 const app = function() {
 
-	const Header = React.createClass({
-		render: () => {
-			return <h1>YOLO</h1>
-		}
-	})
+    const GuestModel = Backbone.Model.extend({
+        defaults: {
+            rsvp: 'pending'
+        }
+    })
 
-	ReactDOM.render(<Header/>,document.querySelector('.container'))
+    const GuestCollection = Backbone.Collection.extend({
+        model: GuestModel
+    })
+
+	ReactDOM.render(<GuestsView guestsColl={new GuestCollection()} />,document.querySelector('.container'))
 }
 
 app()
