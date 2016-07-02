@@ -1,8 +1,8 @@
 import React from 'react'
 
 
-const GuestsView = React.createClass({
-    getInitialState: function(){
+const GuestsView = React.createClass({ //
+    getInitialState: function(){ //lifecycle method that establishes the starting state of the guestsColl props
         return{
             guestsColl: this.props.guestsColl
         }
@@ -11,25 +11,26 @@ const GuestsView = React.createClass({
         // a pub sub
         console.log('bout to mount')
         // call in the collection
-        this.props.guestsColl.on('update', () => {
+        this.props.guestsColl.on('update', () => { //sets up the event to listen for (update event)
             this.setState({
                 guestsColl: this.state.guestsColl
+                // tells the view to re-render when there is an update to the state of the guestsColl (will only render once)
             })
         })
     },
-    _addGuest: function(guestName) {
+    _addGuest: function(guestName) { // a custom function that takes the guestName as input and adds it to the name property on the guestsColl props
         this.props.guestsColl.add({
             name: guestName
         })
     },
 
-    render: function() {
+    render: function() { // renders all the componenets that you will see on the page (top level view)
         console.log(this.props)
         return (
             <div id="guestsViewContainer">
-                <Header />
-                <GuestAdder _addGuestFromGuestsView={this._addGuest} />
-                <GuestList guestsColl={this.state.guestsColl} />
+                <Header /> {/*Header component*/}
+                <GuestAdder _addGuestFromGuestsView={this._addGuest} /> {/*GuestAdder componentthat passes the _addGuest function down to the props of GuestAdder */}
+                <GuestList guestsColl={this.state.guestsColl} /> {/*GuestList component that passes the collection down to the props of GuestList*/}
             </div>
             )
     }
@@ -37,7 +38,7 @@ const GuestsView = React.createClass({
 
 const GuestAdder = React.createClass({
 
-    _handleGuestAdd: function(e) {
+    _handleGuestAdd: function(e) { //event that listens for the enter key and then executes _addGuest function
         if (e.keyCode === 13) {
             this.props._addGuestFromGuestsView(e.target.value)
             e.target.value = ''
@@ -53,14 +54,14 @@ const GuestAdder = React.createClass({
 
 const GuestList = React.createClass({
 
-    _getGuestComponents: function(guestsColl) {
-        return guestsColl.map((mod) => <Guest guestModel={mod} />)
+    _getGuestComponents: function(guestsColl) { //custom method that takes the guestsColl collection as input
+        return guestsColl.map((mod) => <Guest guestModel={mod} />) // a function that iterates through each element of that array and transforms depending on the function of the callback (in this case it is iterating through the collection to add each guest as a model)
     },
 
     render: function() {
         return (
             <ul id="guestList">
-                {this._getGuestComponents(this.props.guestsColl)}
+                {this._getGuestComponents(this.props.guestsColl)} {/* rendering the list on the page using the data from _getGuestComponent, which has the props of guestsColl passed in it*/}
             </ul>
             )
     }
@@ -68,19 +69,20 @@ const GuestList = React.createClass({
 
 const Guest = React.createClass({
 
-    _changeRSVP: function(e) {
-        this.props.guestModel.set({
+    _changeRSVP: function(e) { // custom function for a guest to change their rsvp status
+        this.props.guestModel.set({ //sets the rsvp value to the props of guestModel
             rsvp: e.target.value
         })
     },
 
     _killGuest: function() {
-        this.props.guestModel.destroy()
+        this.props.guestModel.destroy() //custom function that removes guest
     },
 
     render: function() {
 
         var rsvpVal = this.props.guestModel.get('rsvp')
+        //the value of rsvp is set by getting the data grom the rsvp property of the guestModel
 
         // ternary operator alert!
         var selectedVals = {
@@ -88,12 +90,14 @@ const Guest = React.createClass({
             yes: rsvpVal === 'yes' ? 'selected': '',
             no: rsvpVal === 'no' ? 'selected': '',
             maybe: rsvpVal === 'maybe' ? 'selected': '',
+
+            // alternative to if/eslse function. if the consition (first value) is true it will return the first expression (second value) if it is false it will return the second expression (third value)
         }
 
         return (
             <div className="guest">
                 <span className="name">{this.props.guestModel.get('name')}</span>
-                <select onChange={this._changeRSVP}>
+                <select onChange={this._changeRSVP}> {/*renders whichever option is selected and triggers the _changeRSVP method to set the rsvp on the props of Guest componenet*/}
                     <option value="pending" selected={selectedVals.pending} >pending</option>
                     <option value="yes" selected={selectedVals.yes} >yes</option>
                     <option value="no" selected={selectedVals.no} >no</option>
@@ -101,11 +105,11 @@ const Guest = React.createClass({
                 </select>
                 <button onClick={this._killGuest}>X</button>
             </div>
-            )
+            ) //this is where you are rendering the rsvp selection options and the remove guest option with the killGuest method
     }
 })
 
-const Header = React.createClass({
+const Header = React.createClass({ //renders the top of the top of the page
     render: () => {
         return (
             <div id="headingContainer">
@@ -116,5 +120,5 @@ const Header = React.createClass({
     }
 })
 
-export default GuestsView
+export default GuestsView //makes it available for import so all the modules can communicate with each other
 
