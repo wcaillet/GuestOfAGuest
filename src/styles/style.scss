@@ -1,66 +1,83 @@
 * {
-	font-family: Helvetica, Arial, sans-serif;
-	box-sizing: border-box;
+    font-family: Helvetica, Arial, sans-serif;
+    box-sizing: border-box
 }
-$purple:     rgb(100,91,183);
-$blue:      rgb(34,37,105);
-$lavender:           rgb(216,160,217);
 
 input {
     padding: 1%;
-    border: 1px solid $blue;
+    border: 1px solid #222569;
     transition: .5s border ease;
-    font-size: 18px;
+    font-size: 18px
 }
 
 input:focus {
     outline: none;
-    border: 3px solid $blue;
+    border: 3px solid #222569
 }
 
 #headingContainer {
+    text-align: center
+}
 
-    text-align: center;
-    h1 {
-        font-size: 96px;
-        color: $purple;
-        margin-bottom: 1%;
-    }
-    p {
-        font-size: 24px;
+#headingContainer h1 {
+    font-size: 96px;
+    color: #645bb7;
+    margin-bottom: 1%
+}
 
-    }
+#headingContainer p {
+    font-size: 24px
 }
 
 #guestsViewContainer {
     text-align: center;
     margin: 0 auto;
-    width: 80%;
+    width: 80%
+}
 
-    #guestList {
-        border: 2px solid $blue;
-        min-height: 100px;
+#guestsViewContainer a {
+    text-decoration: none;
+    padding: 2% 4%;
+    margin: 2% 2% 0 2%;
+    color: #d8a0d9;
+    background: #222569;
+    border: 5px solid #555;
+    display: inline-block;
+    border-bottom: none
+}
 
-        .guest {
-            text-align: left;
-            font-size: 24px;
-            background: $lavender;
-            padding: 2%;
-            color: white;
-            margin: 2%;
-            position: relative;
+#guestsViewContainer #guestList {
+    margin-top: 0;
+    border: 2px solid #222569;
+    min-height: 100px
+}
 
-            button {
-                position: absolute;
-                right: 2%;
-                top: 50%;
-                transform: translateY(-50%);
-                background: $purple;
-                padding: 1%;
-                border: none;
-                font-size: 20px;
-            }
-        }
-    }
+#guestsViewContainer #guestList .guest {
+    text-align: left;
+    font-size: 24px;
+    background: #d8a0d9;
+    padding: 2%;
+    color: white;
+    margin: 2%;
+    position: relative
+}
 
+#guestsViewContainer #guestList .guest span.rsvp {
+    margin-left: 5%;
+    color: #222569
+}
+
+#guestsViewContainer #guestList .guest select {
+    margin-left: 5%
+}
+
+#guestsViewContainer #guestList .guest button {
+    position: absolute;
+    right: 2%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #645bb7;
+    padding: 1%;
+    border: none;
+    font-size: 20px
 }
